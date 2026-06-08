@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class BookFormatDTO {
-    private Long id;
-    private Long bookId;
-    private String formatType;
-    private Double price;
-    private Integer stock;
+  private Long id;
+  private Long bookId;
+  private String formatType;
+  private Double price;
+  private Integer stock;
 }

@@ -14,27 +14,27 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BookFormat {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
-    private Book book;
+  @ManyToOne
+  @JoinColumn(name = "book_id", nullable = false)
+  private Book book;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private FormatType formatType;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private FormatType formatType;
 
-    @Column(nullable = false)
-    private Double price;
+  @Column(nullable = false)
+  private Double price;
 
-    @Column(nullable = false)
-    private Integer stock;
+  @Column(nullable = false)
+  private Integer stock;
 
-    public enum FormatType {
-        SMALL,
-        MEDIUM,
-        LARGE
-    }
+  public enum FormatType {
+    SMALL,
+    MEDIUM,
+    LARGE
+  }
 }

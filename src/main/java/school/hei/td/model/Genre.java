@@ -1,21 +1,21 @@
 package school.hei.td.model;
 
 public enum Genre {
-    ROMANCE,
-    FANTASY,
-    SCIENCE_FICTION,
-    MYSTERY,
-    HORROR,
-    THRILLER,
-    NON_FICTION,
-    BIOGRAPHY,
-    HISTORY,
-    POETRY,
-    CLASSIC,
-    ADVENTURE,
-    COMEDY,
-    DRAMA,
-    CHILDREN,
-    YOUNG_ADULT,
-    OTHER
+  ROMANCE,
+  FANTASY,
+  SCIENCE_FICTION,
+  MYSTERY,
+  HORROR,
+  THRILLER,
+  NON_FICTION,
+  BIOGRAPHY,
+  HISTORY,
+  POETRY,
+  CLASSIC,
+  ADVENTURE,
+  COMEDY,
+  DRAMA,
+  CHILDREN,
+  YOUNG_ADULT,
+  OTHER
 }

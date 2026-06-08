@@ -4,65 +4,67 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
-    private int id;
-    private String name;
-    private String email;
-    private String phone;
-    private List<Sale> purchaseHistory;
+  private int id;
+  private String name;
+  private String email;
+  private String phone;
+  private List<Sale> purchaseHistory;
 
-    public Customer(int id, String name, String email, String phone) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.purchaseHistory = new ArrayList<>();
-    }
-    public Sale buyBook() {
-        Sale sale = new Sale(purchaseHistory.size() + 1, this);
-        purchaseHistory.add(sale);
-        return sale;
-    }
-    public List<Sale> viewPurchaseHistory() {
-        return purchaseHistory;
-    }
+  public Customer(int id, String name, String email, String phone) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.phone = phone;
+    this.purchaseHistory = new ArrayList<>();
+  }
 
-    public int getId() {
-        return id;
-    }
+  public Sale buyBook() {
+    Sale sale = new Sale(purchaseHistory.size() + 1, this);
+    purchaseHistory.add(sale);
+    return sale;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public List<Sale> viewPurchaseHistory() {
+    return purchaseHistory;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getPhone() {
-        return phone;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public List<Sale> getPurchaseHistory() {
-        return purchaseHistory;
-    }
+  public String getPhone() {
+    return phone;
+  }
 
-    public void setPurchaseHistory(List<Sale> purchaseHistory) {
-        this.purchaseHistory = purchaseHistory;
-    }
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public List<Sale> getPurchaseHistory() {
+    return purchaseHistory;
+  }
+
+  public void setPurchaseHistory(List<Sale> purchaseHistory) {
+    this.purchaseHistory = purchaseHistory;
+  }
 }
