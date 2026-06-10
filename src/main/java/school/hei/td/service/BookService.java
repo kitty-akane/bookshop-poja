@@ -1,0 +1,35 @@
+package school.hei.td.service;
+
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import school.hei.td.dto.BookDTO;
+import school.hei.td.entity.Book;
+import school.hei.td.mapper.BookMapper;
+import school.hei.td.repository.BookRepository;
+
+import java.util.List;
+
+@Service
+@AllArgsConstructor
+public class BookService {
+    private final BookRepository bookRepository;
+
+    public List<BookDTO> getAllBooks() {
+        return bookRepository.findAll()
+                .stream()
+                .map(BookMapper::toDTO)
+                .toList();
+    }
+
+    public BookDTO createBook(BookDTO dto) {
+        Book book = BookMapper.toEntity(dto);
+        Book savedBook = bookRepository.save(book);
+        return BookMapper.toDTO(savedBook);
+    }
+
+    public void deleteBook(Long id) {
+        Book existingBook = bookRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+        bookRepository.delete(existingBook);
+    }
+}
