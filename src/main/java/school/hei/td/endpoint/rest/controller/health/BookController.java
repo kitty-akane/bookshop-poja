@@ -3,30 +3,39 @@ package school.hei.td.endpoint.rest.controller.health;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import school.hei.td.dto.BookDTO;
 import school.hei.td.service.BookService;
 
 @AllArgsConstructor
 @RestController
+@RequestMapping("/books")
 public class BookController {
+
   private final BookService bookService;
 
-  @GetMapping(value = "/books")
+  @GetMapping
   public List<BookDTO> books() {
     return bookService.getAllBooks();
   }
 
-  @DeleteMapping(value = "/books/{id}")
+  @GetMapping("/{id}")
+  public BookDTO getBookById(@PathVariable Long id) {
+    return bookService.getBookById(id);
+  }
+
+  @PatchMapping("/{id}")
+  public BookDTO updateBook(@PathVariable Long id, @RequestBody BookDTO dto) {
+    return bookService.updateBook(id, dto);
+  }
+
+  @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
     bookService.deleteBook(id);
     return ResponseEntity.noContent().build();
   }
 
-  @GetMapping("/books/{value}")
+  @GetMapping("/search/{value}")
   public List<BookDTO> getAllBooksSearch(@PathVariable String value) {
     return bookService.getAllBooksSearch(value);
   }
