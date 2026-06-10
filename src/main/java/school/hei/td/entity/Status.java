@@ -1,8 +1,8 @@
 package school.hei.td.entity;
 
 public enum Status {
-    AVAILABLE,
-    BORROWED,
-    LOST,
-    RESERVED
+  AVAILABLE,
+  BORROWED,
+  LOST,
+  RESERVED
 }
