@@ -32,4 +32,11 @@ public class BookService {
                 .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
         bookRepository.delete(existingBook);
     }
+
+    public List<BookDTO> getAllBooksSearch(String value) {
+        return bookRepository.findByNameContaining(value)
+                .stream()
+                .map(BookMapper::toDTO)
+                .toList();
+    }
 }

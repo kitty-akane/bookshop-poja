@@ -26,4 +26,9 @@ public class BookController {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/books/{value}")
+    public List<BookDTO> getAllBooksSearch(@PathVariable String value) {
+        return bookService.getAllBooksSearch(value);
+    }
 }
