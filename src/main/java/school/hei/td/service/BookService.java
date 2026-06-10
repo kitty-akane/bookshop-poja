@@ -23,6 +23,56 @@ public class BookService {
     return BookMapper.toDTO(savedBook);
   }
 
+  public BookDTO getBookById(Long id) {
+    Book book =
+        bookRepository
+            .findById(id)
+            .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+    return BookMapper.toDTO(book);
+  }
+
+  public BookDTO updateBook(Long id, BookDTO dto) {
+    Book existingBook =
+        bookRepository
+            .findById(id)
+            .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+
+    if (dto.getTitle() != null) {
+      existingBook.setTitle(dto.getTitle());
+    }
+
+    if (dto.getIsbn() != null) {
+      existingBook.setIsbn(dto.getIsbn());
+    }
+
+    if (dto.getAuthor() != null) {
+      existingBook.setAuthor(dto.getAuthor());
+    }
+
+    if (dto.getPublisher() != null) {
+      existingBook.setPublisher(dto.getPublisher());
+    }
+
+    if (dto.getLanguage() != null) {
+      existingBook.setLanguage(dto.getLanguage());
+    }
+
+    if (dto.getCategory() != null) {
+      existingBook.setCategory(dto.getCategory());
+    }
+
+    if (dto.getDescription() != null) {
+      existingBook.setDescription(dto.getDescription());
+    }
+
+    if (dto.getPublicationDate() != null) {
+      existingBook.setPublicationDate(dto.getPublicationDate());
+    }
+
+    Book saved = bookRepository.save(existingBook);
+    return BookMapper.toDTO(saved);
+  }
+
   public void deleteBook(Long id) {
     Book existingBook =
         bookRepository
