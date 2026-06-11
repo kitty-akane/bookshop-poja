@@ -17,8 +17,9 @@ public class BookCopyService {
   private final BookCopyRepository repository;
   private final BookRepository bookRepository;
 
-  public BookCopyService(BookCopyRepository repository) {
+  public BookCopyService(BookCopyRepository repository, BookRepository bookRepository) {
     this.repository = repository;
+    this.bookRepository = bookRepository;
   }
 
   public List<BookCopyDTO> getAllBookCopies() {
@@ -27,10 +28,11 @@ public class BookCopyService {
 
   public BookCopyDTO createBookCopy(BookCopyDTO dto) {
     Book book =
-        repository
-            .findById(dto.getIdBook())
-            .orElseThrow(() -> new RuntimeException("Book not found"));
-    BookCopy bookCopy = BookCopyMapper.toEntity(dto);
+        bookRepository
+            .findById(dto.getIdBookCopy())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    BookCopy bookCopy = new BookCopy();
+    bookCopy.setAvailable(dto.getAvailable());
     bookCopy.setBook(book);
     BookCopy savedBookCopy = repository.save(bookCopy);
     return BookCopyMapper.toDTO(savedBookCopy);
@@ -40,23 +42,9 @@ public class BookCopyService {
     BookCopy existingBookCopy =
         repository
             .findById(id)
-            .orElseThrow(() -> new RuntimeException("BookCopy with id: " + id + " not found"));
-
-    Book book =
-        bookRepository
-            .findById(dto.getIdBook())
-            .orElseThrow(
-                () -> new RuntimeException("Book with id: " + dto.getIdBook() + " not found"));
-
-    existingBookCopy.setBarcode(dto.getBarcode());
-    existingBookCopy.setStatus(dto.getStatus());
-    existingBookCopy.setPrice(dto.getPrice());
-    existingBookCopy.setFormat(dto.getFormat());
-    existingBookCopy.setAcquiredDate(dto.getAcquiredDate());
-    existingBookCopy.setBook(book);
-
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    existingBookCopy.setAvailable(dto.getAvailable());
     BookCopy updatedBookCopy = repository.save(existingBookCopy);
-
     return BookCopyMapper.toDTO(updatedBookCopy);
   }
 
