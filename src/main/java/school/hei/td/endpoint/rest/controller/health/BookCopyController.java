@@ -21,16 +21,6 @@ public class BookCopyController {
     return service.getAllBookCopies();
   }
 
-  @PostMapping(value = "/bookCopies")
-  public BookCopyDTO bookCopyDTO(@RequestBody BookCopyDTO dto) {
-    return service.createBookCopy(dto);
-  }
-
-  @PutMapping("/bookCopies/{id}")
-  public BookCopyDTO updateBookCopy(@PathVariable Long id, @RequestBody BookCopyDTO dto) {
-    return service.updateBookCopy(id, dto);
-  }
-
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
     service.deleteById(id);
