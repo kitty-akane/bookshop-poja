@@ -1,12 +1,16 @@
 package school.hei.td.endpoint.rest.controller.health;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import school.hei.td.service.BookCopyService;
 
 @RestController
 @RequestMapping("/api/bookcopies")
 public class BookCopyController {
+
   private final BookCopyService service;
 
   public BookCopyController(BookCopyService service) {
