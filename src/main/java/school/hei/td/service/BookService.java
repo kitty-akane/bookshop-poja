@@ -82,6 +82,6 @@ public class BookService {
   }
 
   public List<BookDTO> getAllBooksSearch(String value) {
-    return bookRepository.findByNameContaining(value).stream().map(BookMapper::toDTO).toList();
+    return bookRepository.findByTitleContaining(value).stream().map(BookMapper::toDTO).toList();
   }
 }
