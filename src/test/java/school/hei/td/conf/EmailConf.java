@@ -6,7 +6,7 @@ import school.hei.td.PojaGenerated;
 @PojaGenerated
 public class EmailConf {
 
-    void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("aws.ses.source", () -> "dummy-ses-source");
-    }
+  void configureProperties(DynamicPropertyRegistry registry) {
+    registry.add("aws.ses.source", () -> "dummy-ses-source");
+  }
 }

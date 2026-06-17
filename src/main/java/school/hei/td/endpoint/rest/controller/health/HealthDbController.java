@@ -1,5 +1,8 @@
 package school.hei.td.endpoint.rest.controller.health;
 
+import static school.hei.td.endpoint.rest.controller.health.PingController.KO;
+import static school.hei.td.endpoint.rest.controller.health.PingController.OK;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,18 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 import school.hei.td.PojaGenerated;
 import school.hei.td.repository.DummyRepository;
 
-import static school.hei.td.endpoint.rest.controller.health.PingController.KO;
-import static school.hei.td.endpoint.rest.controller.health.PingController.OK;
-
 @PojaGenerated
 @RestController
 @AllArgsConstructor
 public class HealthDbController {
 
-    DummyRepository dummyRepository;
+  DummyRepository dummyRepository;
 
-    @GetMapping("/health/db")
-    public ResponseEntity<String> dummyTable_should_not_be_empty() {
-        return dummyRepository.findAll().isEmpty() ? KO : OK;
-    }
+  @GetMapping("/health/db")
+  public ResponseEntity<String> dummyTable_should_not_be_empty() {
+    return dummyRepository.findAll().isEmpty() ? KO : OK;
+  }
 }
