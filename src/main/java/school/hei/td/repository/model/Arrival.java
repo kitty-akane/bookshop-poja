@@ -6,39 +6,39 @@ import java.util.List;
 
 public class Arrival {
 
-    private int id;
-    private Date arrivalDate;
-    private String supplierName;
-    private List<BookCopy> copies;
+  private int id;
+  private Date arrivalDate;
+  private String supplierName;
+  private List<BookCopy> copies;
 
-    public Arrival(int id, Date arrivalDate, String supplierName) {
-        this.id = id;
-        this.arrivalDate = arrivalDate;
-        this.supplierName = supplierName;
-        this.copies = new ArrayList<>();
-    }
+  public Arrival(int id, Date arrivalDate, String supplierName) {
+    this.id = id;
+    this.arrivalDate = arrivalDate;
+    this.supplierName = supplierName;
+    this.copies = new ArrayList<>();
+  }
 
-    public void addBookCopy(BookCopy copy) {
-        copies.add(copy);
-    }
+  public void addBookCopy(BookCopy copy) {
+    copies.add(copy);
+  }
 
-    public int getTotalCopies() {
-        return copies.size();
-    }
+  public int getTotalCopies() {
+    return copies.size();
+  }
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public Date getArrivalDate() {
-        return arrivalDate;
-    }
+  public Date getArrivalDate() {
+    return arrivalDate;
+  }
 
-    public String getSupplierName() {
-        return supplierName;
-    }
+  public String getSupplierName() {
+    return supplierName;
+  }
 
-    public List<BookCopy> getCopies() {
-        return copies;
-    }
+  public List<BookCopy> getCopies() {
+    return copies;
+  }
 }
