@@ -11,5 +11,6 @@ import school.hei.td.PojaGenerated;
 @Getter
 @Setter
 public class Dummy {
-  @Id private String id;
+    @Id
+    private String id;
 }

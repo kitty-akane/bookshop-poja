@@ -14,15 +14,15 @@ import school.hei.td.repository.DummyUuidRepository;
 @AllArgsConstructor
 public class PingController {
 
-  DummyRepository dummyRepository;
-  DummyUuidRepository dummyUuidRepository;
+    DummyRepository dummyRepository;
+    DummyUuidRepository dummyUuidRepository;
 
-  public static final ResponseEntity<String> OK = new ResponseEntity<>("OK", HttpStatus.OK);
-  public static final ResponseEntity<String> KO =
-      new ResponseEntity<>("KO", HttpStatus.INTERNAL_SERVER_ERROR);
+    public static final ResponseEntity<String> OK = new ResponseEntity<>("OK", HttpStatus.OK);
+    public static final ResponseEntity<String> KO =
+            new ResponseEntity<>("KO", HttpStatus.INTERNAL_SERVER_ERROR);
 
-  @GetMapping("/ping")
-  public String ping() {
-    return "pong";
-  }
+    @GetMapping("/ping")
+    public String ping() {
+        return "pong";
+    }
 }
