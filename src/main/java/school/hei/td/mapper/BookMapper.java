@@ -1,46 +1,37 @@
 package school.hei.td.mapper;
 
-import java.util.List;
-import school.hei.td.dto.BookCopyDTO;
-import school.hei.td.dto.BookDTO;
+import org.springframework.stereotype.Component;
 import school.hei.td.entity.Book;
+import school.hei.td.entity.dto.BookDTO;
 
+@Component
 public class BookMapper {
 
-  public static BookDTO toDTO(Book book) {
-    BookDTO dto = new BookDTO();
-    dto.setIdBook(book.getIdBook());
-    dto.setTitle(book.getTitle());
-    dto.setIsbn(book.getIsbn());
-    dto.setPublicationDate(book.getPublicationDate());
-    dto.setAuthor(book.getAuthor());
-    dto.setPublisher(book.getPublisher());
-    dto.setLanguage(book.getLanguage());
-    dto.setCategory(book.getCategory());
-    dto.setDescription(book.getDescription());
-
-    List<BookCopyDTO> copies = book.getBookCopies().stream().map(BookCopyMapper::toDTO).toList();
-    dto.setBookCopyDTO(copies);
-    return dto;
+  public BookDTO toDTO(Book book) {
+    return BookDTO.builder()
+        .idBook(book.getIdBook())
+        .title(book.getTitle())
+        .isbn(book.getIsbn())
+        .publicationDate(book.getPublicationDate())
+        .author(book.getAuthor())
+        .publisher(book.getPublisher())
+        .language(book.getLanguage())
+        .category(book.getCategory())
+        .description(book.getDescription())
+        .build();
   }
 
-  public static Book toEntity(BookDTO dto) {
-    if (dto == null) {
-      return null;
-    }
-
-    Book book = new Book();
-
-    book.setIdBook(dto.getIdBook());
-    book.setTitle(dto.getTitle());
-    book.setIsbn(dto.getIsbn());
-    book.setPublicationDate(dto.getPublicationDate());
-    book.setAuthor(dto.getAuthor());
-    book.setPublisher(dto.getPublisher());
-    book.setLanguage(dto.getLanguage());
-    book.setCategory(dto.getCategory());
-    book.setDescription(dto.getDescription());
-
-    return book;
+  public Book toEntity(BookDTO dto) {
+    return Book.builder()
+        .idBook(dto.getIdBook())
+        .title(dto.getTitle())
+        .isbn(dto.getIsbn())
+        .publicationDate(dto.getPublicationDate())
+        .author(dto.getAuthor())
+        .publisher(dto.getPublisher())
+        .language(dto.getLanguage())
+        .category(dto.getCategory())
+        .description(dto.getDescription())
+        .build();
   }
 }

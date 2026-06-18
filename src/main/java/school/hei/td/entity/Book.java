@@ -2,8 +2,6 @@ package school.hei.td.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.*;
 
 @NoArgsConstructor
@@ -14,13 +12,14 @@ import lombok.*;
 @ToString
 @Table(name = "book")
 @Entity
+@Builder
 public class Book {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "book_id", nullable = false, unique = true)
   private Long idBook;
 
-  @Column(name = "title", nullable = false)
+  @Column(name = "title_book", nullable = false)
   private String title;
 
   @Column(name = "isbn", nullable = false, unique = true)
@@ -43,7 +42,4 @@ public class Book {
 
   @Column(name = "description", nullable = false, length = 100)
   private String description;
-
-  @OneToMany(mappedBy = "book")
-  private List<BookCopy> bookCopies = new ArrayList<>();
 }

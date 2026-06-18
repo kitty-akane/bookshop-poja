@@ -12,6 +12,7 @@ import lombok.*;
 @ToString
 @Table(name = "bookcopy")
 @Entity
+@Builder
 public class BookCopy {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -2,9 +2,8 @@ package school.hei.td.endpoint.rest.controller.health;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import school.hei.td.dto.BookDTO;
+import school.hei.td.entity.dto.BookDTO;
 import school.hei.td.service.BookService;
 
 @AllArgsConstructor
@@ -24,15 +23,20 @@ public class BookController {
     return bookService.getBookById(id);
   }
 
-  @PatchMapping("/{id}")
+  @PutMapping("/{id}")
   public BookDTO updateBook(@PathVariable Long id, @RequestBody BookDTO dto) {
     return bookService.updateBook(id, dto);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+  public String deleteBook(@PathVariable Long id) {
     bookService.deleteBook(id);
-    return ResponseEntity.noContent().build();
+    return "Book copy deleted successfully";
+  }
+
+  @PostMapping
+  public BookDTO create(@RequestBody BookDTO bookDTO) {
+    return bookService.createBook(bookDTO);
   }
 
   @GetMapping("/search/{value}")

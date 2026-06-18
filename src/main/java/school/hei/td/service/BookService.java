@@ -3,8 +3,8 @@ package school.hei.td.service;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import school.hei.td.dto.BookDTO;
 import school.hei.td.entity.Book;
+import school.hei.td.entity.dto.BookDTO;
 import school.hei.td.mapper.BookMapper;
 import school.hei.td.repository.BookRepository;
 
@@ -12,15 +12,14 @@ import school.hei.td.repository.BookRepository;
 @AllArgsConstructor
 public class BookService {
   private final BookRepository bookRepository;
+  private final BookMapper bookMapper;
 
   public List<BookDTO> getAllBooks() {
-    return bookRepository.findAll().stream().map(BookMapper::toDTO).toList();
+    return bookRepository.findAll().stream().map(bookMapper::toDTO).toList();
   }
 
   public BookDTO createBook(BookDTO dto) {
-    Book book = BookMapper.toEntity(dto);
-    Book savedBook = bookRepository.save(book);
-    return BookMapper.toDTO(savedBook);
+    return bookMapper.toDTO(bookRepository.save(bookMapper.toEntity(dto)));
   }
 
   public BookDTO getBookById(Long id) {
@@ -28,7 +27,7 @@ public class BookService {
         bookRepository
             .findById(id)
             .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
-    return BookMapper.toDTO(book);
+    return bookMapper.toDTO(book);
   }
 
   public BookDTO updateBook(Long id, BookDTO dto) {
@@ -70,7 +69,7 @@ public class BookService {
     }
 
     Book saved = bookRepository.save(existingBook);
-    return BookMapper.toDTO(saved);
+    return bookMapper.toDTO(saved);
   }
 
   public void deleteBook(Long id) {
@@ -82,6 +81,6 @@ public class BookService {
   }
 
   public List<BookDTO> getAllBooksSearch(String value) {
-    return bookRepository.findByTitleContaining(value).stream().map(BookMapper::toDTO).toList();
+    return bookRepository.findByTitleContaining(value).stream().map(bookMapper::toDTO).toList();
   }
 }
