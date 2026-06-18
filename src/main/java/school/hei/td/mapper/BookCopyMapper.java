@@ -1,35 +1,36 @@
 package school.hei.td.mapper;
 
-import school.hei.td.dto.BookCopyDTO;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 import school.hei.td.entity.BookCopy;
+import school.hei.td.entity.dto.BookCopyDTO;
 
+@Component
+@AllArgsConstructor
 public class BookCopyMapper {
+  private final BookMapper bookMapper;
 
-  public static BookCopyDTO toDTO(BookCopy bookCopy) {
-    BookCopyDTO dto = new BookCopyDTO();
-    dto.setIdBookCopy(bookCopy.getIdBookCopy());
-    dto.setBarcode(bookCopy.getBarcode());
-    dto.setStatus(bookCopy.getStatus());
-    dto.setPrice(bookCopy.getPrice());
-    dto.setFormat(bookCopy.getFormat());
-    dto.setAcquiredDate(bookCopy.getAcquiredDate());
-
-    if (bookCopy.getBook() != null) {
-      dto.setIdBook(bookCopy.getBook().getIdBook());
-    }
-
-    return dto;
+  public BookCopyDTO toDTO(BookCopy bookCopy) {
+    return BookCopyDTO.builder()
+        .idBookCopy(bookCopy.getIdBookCopy())
+        .barcode(bookCopy.getBarcode())
+        .status(bookCopy.getStatus())
+        .price(bookCopy.getPrice())
+        .format(bookCopy.getFormat())
+        .acquiredDate(bookCopy.getAcquiredDate())
+        .bookDTO(bookMapper.toDTO(bookCopy.getBook()))
+        .build();
   }
 
-  public static BookCopy toEntity(BookCopyDTO dto) {
-    BookCopy bookCopy = new BookCopy();
-
-    bookCopy.setBarcode(dto.getBarcode());
-    bookCopy.setStatus(dto.getStatus());
-    bookCopy.setPrice(dto.getPrice());
-    bookCopy.setFormat(dto.getFormat());
-    bookCopy.setAcquiredDate(dto.getAcquiredDate());
-
-    return bookCopy;
+  public BookCopy toEntity(BookCopyDTO dto) {
+    return BookCopy.builder()
+        .idBookCopy(dto.getIdBookCopy())
+        .barcode(dto.getBarcode())
+        .status(dto.getStatus())
+        .price(dto.getPrice())
+        .format(dto.getFormat())
+        .acquiredDate(dto.getAcquiredDate())
+        .book(bookMapper.toEntity(dto.getBookDTO()))
+        .build();
   }
 }

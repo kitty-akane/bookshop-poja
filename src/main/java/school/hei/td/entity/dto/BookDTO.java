@@ -1,7 +1,6 @@
-package school.hei.td.dto;
+package school.hei.td.entity.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 import lombok.*;
 
 @NoArgsConstructor
@@ -10,6 +9,7 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @ToString
+@Builder
 public class BookDTO {
   private Long idBook;
   private String title;
@@ -20,5 +20,4 @@ public class BookDTO {
   private String language;
   private String category;
   private String description;
-  private List<BookCopyDTO> bookCopyDTO;
 }

@@ -1,4 +1,4 @@
-package school.hei.td.dto;
+package school.hei.td.entity.dto;
 
 import java.time.LocalDate;
 import lombok.*;
@@ -11,6 +11,7 @@ import school.hei.td.entity.Status;
 @Setter
 @EqualsAndHashCode
 @ToString
+@Builder
 public class BookCopyDTO {
   private Long idBookCopy;
   private String barcode;
@@ -18,5 +19,5 @@ public class BookCopyDTO {
   private Double price;
   private Format format;
   private LocalDate acquiredDate;
-  private Long idBook;
+  private BookDTO bookDTO;
 }

@@ -1,7 +1,7 @@
 package school.hei.td.entity;
 
 public enum Format {
-  PAPERBACK,
-  HARDCOVER,
+  HARD_COVER,
+  SOFT_COVER,
   POCKET
 }

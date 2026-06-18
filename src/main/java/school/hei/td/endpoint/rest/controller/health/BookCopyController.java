@@ -1,20 +1,17 @@
 package school.hei.td.endpoint.rest.controller.health;
 
 import java.util.List;
-import org.springframework.http.ResponseEntity;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import school.hei.td.dto.BookCopyDTO;
+import school.hei.td.entity.dto.BookCopyDTO;
 import school.hei.td.service.BookCopyService;
 
 @RestController
-@RequestMapping("/api/bookcopies")
+@AllArgsConstructor
+@RequestMapping("/bookcopies")
 public class BookCopyController {
 
   private final BookCopyService service;
-
-  public BookCopyController(BookCopyService service) {
-    this.service = service;
-  }
 
   @GetMapping()
   public List<BookCopyDTO> bookCopies() {
@@ -37,8 +34,8 @@ public class BookCopyController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> delete(@PathVariable Long id) {
+  public String delete(@PathVariable Long id) {
     service.deleteById(id);
-    return ResponseEntity.noContent().build();
+    return "Book copy deleted successfully";
   }
 }
