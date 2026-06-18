@@ -2,9 +2,11 @@ package school.hei.td.service;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import school.hei.td.entity.Book;
 import school.hei.td.entity.dto.BookDTO;
+import school.hei.td.exception.NotFoundException;
 import school.hei.td.mapper.BookMapper;
 import school.hei.td.repository.BookRepository;
 
@@ -26,7 +28,8 @@ public class BookService {
     Book book =
         bookRepository
             .findById(id)
-            .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+            .orElseThrow(
+                () -> new NotFoundException("Book not found with id: " + id, HttpStatus.NOT_FOUND));
     return bookMapper.toDTO(book);
   }
 
@@ -34,7 +37,8 @@ public class BookService {
     Book existingBook =
         bookRepository
             .findById(id)
-            .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+            .orElseThrow(
+                () -> new NotFoundException("Book not found with id: " + id, HttpStatus.NOT_FOUND));
 
     if (dto.getTitle() != null) {
       existingBook.setTitle(dto.getTitle());
@@ -76,7 +80,8 @@ public class BookService {
     Book existingBook =
         bookRepository
             .findById(id)
-            .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+            .orElseThrow(
+                () -> new NotFoundException("Book not found with id: " + id, HttpStatus.NOT_FOUND));
     bookRepository.delete(existingBook);
   }
 
