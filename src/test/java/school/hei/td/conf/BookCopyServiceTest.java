@@ -133,10 +133,8 @@ public class BookCopyServiceTest {
                 .acquiredDate(LocalDate.of(2022, 5, 10))
                 .build());
 
-    // WHEN
     var result = bookCopyService.getAllBookCopies();
 
-    // THEN
     assertEquals(2, result.size());
     assertEquals("BC-001", result.get(0).getBarcode());
     assertEquals("BC-002", result.get(1).getBarcode());
@@ -144,21 +142,18 @@ public class BookCopyServiceTest {
 
   @Test
   void testGetById() {
-    // GIVEN — happy path
+
     var entity = sampleBookCopy();
     var dto = sampleDTO();
 
     when(repository.findById(EXISTING_ID)).thenReturn(Optional.of(entity));
     when(bookCopyMapper.toDTO(entity)).thenReturn(dto);
 
-    // WHEN
     var result = bookCopyService.getById(EXISTING_ID);
 
-    // THEN
     assertEquals(EXISTING_ID, result.getIdBookCopy());
     assertEquals("BC-001", result.getBarcode());
 
-    // not found
     when(repository.findById(NON_EXISTING_ID)).thenReturn(Optional.empty());
     var exception =
         assertThrows(RuntimeException.class, () -> bookCopyService.getById(NON_EXISTING_ID));
@@ -167,7 +162,7 @@ public class BookCopyServiceTest {
 
   @Test
   void testUpdateBookCopy() {
-    // GIVEN — happy path
+
     var existing = sampleBookCopy();
     var dto =
         BookCopyDTO.builder()
@@ -191,14 +186,11 @@ public class BookCopyServiceTest {
     when(repository.save(any())).thenReturn(existing);
     when(bookCopyMapper.toDTO(any())).thenReturn(expectedDTO);
 
-    // WHEN
     var result = bookCopyService.updateBookCopy(EXISTING_ID, dto);
 
-    // THEN
     assertEquals("BC-UPDATED", result.getBarcode());
     assertEquals(Status.BORROWED, result.getStatus());
 
-    // not found
     when(repository.findById(NON_EXISTING_ID)).thenReturn(Optional.empty());
     var exception =
         assertThrows(
