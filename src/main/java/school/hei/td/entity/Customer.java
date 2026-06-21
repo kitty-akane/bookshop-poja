@@ -15,26 +15,26 @@ import lombok.*;
 @Builder
 public class Customer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "customer_id", nullable = false, unique = true)
-    private Long idCustomer;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @Column(name = "customer_id", nullable = false, unique = true)
+  private Long idCustomer;
 
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
+  @Column(name = "first_name", nullable = false)
+  private String firstName;
 
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+  @Column(name = "last_name", nullable = false)
+  private String lastName;
 
-    @Column(name = "email", unique = true)
-    private String email;
+  @Column(name = "email", unique = true)
+  private String email;
 
-    @Column(name = "phone")
-    private String phone;
+  @Column(name = "phone")
+  private String phone;
 
-    @Column(name = "address")
-    private String address;
+  @Column(name = "address")
+  private String address;
 
-    @Column(name = "birth_date")
-    private LocalDate birthDate;
+  @Column(name = "birth_date")
+  private LocalDate birthDate;
 }

@@ -11,25 +11,31 @@ import school.hei.td.service.CustomerService;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private final CustomerService service;
+  private final CustomerService service;
 
-    @GetMapping
-    public List<CustomerDTO> getAll() { return service.getAll(); }
+  @GetMapping
+  public List<CustomerDTO> getAll() {
+    return service.getAll();
+  }
 
-    @GetMapping("/{id}")
-    public CustomerDTO getById(@PathVariable Long id) { return service.getById(id); }
+  @GetMapping("/{id}")
+  public CustomerDTO getById(@PathVariable Long id) {
+    return service.getById(id);
+  }
 
-    @PostMapping
-    public CustomerDTO create(@RequestBody CustomerDTO dto) { return service.create(dto); }
+  @PostMapping
+  public CustomerDTO create(@RequestBody CustomerDTO dto) {
+    return service.create(dto);
+  }
 
-    @PutMapping("/{id}")
-    public CustomerDTO update(@PathVariable Long id, @RequestBody CustomerDTO dto) {
-        return service.update(id, dto);
-    }
+  @PutMapping("/{id}")
+  public CustomerDTO update(@PathVariable Long id, @RequestBody CustomerDTO dto) {
+    return service.update(id, dto);
+  }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
-        service.deleteById(id);
-        return "Customer deleted successfully";
-    }
+  @DeleteMapping("/{id}")
+  public String delete(@PathVariable Long id) {
+    service.deleteById(id);
+    return "Customer deleted successfully";
+  }
 }

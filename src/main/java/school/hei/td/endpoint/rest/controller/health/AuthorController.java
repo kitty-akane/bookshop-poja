@@ -11,25 +11,31 @@ import school.hei.td.service.AuthorService;
 @RequestMapping("/authors")
 public class AuthorController {
 
-    private final AuthorService service;
+  private final AuthorService service;
 
-    @GetMapping
-    public List<AuthorDTO> getAll() { return service.getAll(); }
+  @GetMapping
+  public List<AuthorDTO> getAll() {
+    return service.getAll();
+  }
 
-    @GetMapping("/{id}")
-    public AuthorDTO getById(@PathVariable Long id) { return service.getById(id); }
+  @GetMapping("/{id}")
+  public AuthorDTO getById(@PathVariable Long id) {
+    return service.getById(id);
+  }
 
-    @PostMapping
-    public AuthorDTO create(@RequestBody AuthorDTO dto) { return service.create(dto); }
+  @PostMapping
+  public AuthorDTO create(@RequestBody AuthorDTO dto) {
+    return service.create(dto);
+  }
 
-    @PutMapping("/{id}")
-    public AuthorDTO update(@PathVariable Long id, @RequestBody AuthorDTO dto) {
-        return service.update(id, dto);
-    }
+  @PutMapping("/{id}")
+  public AuthorDTO update(@PathVariable Long id, @RequestBody AuthorDTO dto) {
+    return service.update(id, dto);
+  }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
-        service.deleteById(id);
-        return "Author deleted successfully";
-    }
+  @DeleteMapping("/{id}")
+  public String delete(@PathVariable Long id) {
+    service.deleteById(id);
+    return "Author deleted successfully";
+  }
 }

@@ -15,20 +15,20 @@ import lombok.*;
 @Builder
 public class Author {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "author_id", nullable = false, unique = true)
-    private Long idAuthor;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @Column(name = "author_id", nullable = false, unique = true)
+  private Long idAuthor;
 
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
+  @Column(name = "first_name", nullable = false)
+  private String firstName;
 
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+  @Column(name = "last_name", nullable = false)
+  private String lastName;
 
-    @Column(name = "nationality")
-    private String nationality;
+  @Column(name = "nationality")
+  private String nationality;
 
-    @Column(name = "birth_date")
-    private LocalDate birthDate;
+  @Column(name = "birth_date")
+  private LocalDate birthDate;
 }
