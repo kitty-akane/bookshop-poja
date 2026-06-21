@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import school.hei.td.entity.BookCopy;
 import school.hei.td.entity.dto.BookCopyDTO;
+import school.hei.td.exception.NotFoundException;
 import school.hei.td.mapper.BookCopyMapper;
 import school.hei.td.repository.BookCopyRepository;
 import school.hei.td.repository.BookRepository;
@@ -33,7 +34,8 @@ public class BookCopyService {
     BookCopy bookCopy =
         repository
             .findById(id)
-            .orElseThrow(() -> new RuntimeException("BookCopy not found: " + id));
+            .orElseThrow(
+                () -> new NotFoundException("BookCopy not found: " + id, HttpStatus.NOT_FOUND));
     return bookCopyMapper.toDTO(bookCopy);
   }
 
@@ -41,7 +43,8 @@ public class BookCopyService {
     BookCopy bookCopy =
         repository
             .findById(id)
-            .orElseThrow(() -> new RuntimeException("BookCopy not found: " + id));
+            .orElseThrow(
+                () -> new NotFoundException("BookCopy not found: " + id, HttpStatus.NOT_FOUND));
     bookCopy.setBarcode(bookCopyDTO.getBarcode());
     bookCopy.setStatus(bookCopyDTO.getStatus());
     bookCopy.setPrice(bookCopyDTO.getPrice());
