@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.server.ResponseStatusException;
 import school.hei.td.exception.model.ExceptionBody;
 
 @RestControllerAdvice
@@ -56,6 +57,20 @@ public class GlobalExceptionHandler {
                 500,
                 "An internal error has occurred",
                 exception.getMessage(),
+                request.getRequestURI(),
+                Instant.now()));
+  }
+
+  @ExceptionHandler(ResponseStatusException.class)
+  public ResponseEntity<ExceptionBody> handleResponseStatusException(
+      ResponseStatusException exception, HttpServletRequest request) {
+
+    return ResponseEntity.status(exception.getStatusCode())
+        .body(
+            new ExceptionBody(
+                exception.getStatusCode().value(),
+                exception.getStatusCode().toString(),
+                exception.getReason(),
                 request.getRequestURI(),
                 Instant.now()));
   }
