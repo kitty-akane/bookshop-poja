@@ -10,13 +10,12 @@ plugins {
 
     id 'jacoco'
 
-    
+
 }
 
 jacoco {
     toolVersion = "0.8.11"
 }
-
 
 
 repositories {
@@ -37,12 +36,23 @@ configurations {
 }
 
 
-
+test {
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    useJUnitPlatform()
+    finalizedBy jacocoTestCoverageVerification
+}
 
 test {
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     useJUnitPlatform()
     finalizedBy jacocoTestCoverageVerification
+    testLogging {
+        events "failed", "skipped"
+        exceptionFormat = "full"
+        showStackTraces = true
+        showExceptions = true
+        showCauses = true
+    }
 }
 
 jacocoTestCoverageVerification {
@@ -151,7 +161,7 @@ dependencies {
     testImplementation 'org.testcontainers:testcontainers-junit-jupiter:2.0.2'
     testImplementation 'org.junit-pioneer:junit-pioneer:2.2.0'
 
-implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 
 }
