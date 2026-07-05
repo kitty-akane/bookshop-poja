@@ -63,8 +63,7 @@ public class BookController {
 
   // Stock d'une edition precise (format) du livre
   @GetMapping("/{bookId}/stock/{format}")
-  public StockDTO getBookStockByFormat(
-      @PathVariable Long bookId, @PathVariable Format format) {
+  public StockDTO getBookStockByFormat(@PathVariable Long bookId, @PathVariable Format format) {
     bookService.getBookById(bookId);
     List<BookCopy> copies =
         bookCopyRepository.findByBook_IdBook(bookId).stream()
