@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import school.hei.td.entity.BookCopy;
+import school.hei.td.entity.Format;
 import school.hei.td.entity.dto.BookDTO;
 import school.hei.td.entity.dto.StockDTO;
 import school.hei.td.repository.BookCopyRepository;
@@ -52,11 +53,23 @@ public class BookController {
     return bookService.getAllBooksSearch(value);
   }
 
-  @GetMapping("/{bookId}/copies/{copyId}/stock")
-  public StockDTO getStock(@PathVariable Long bookId, @PathVariable Long copyId) {
-    bookCopyService.getById(copyId);
+  // Stock global du livre, toutes editions confondues
+  @GetMapping("/{bookId}/stock")
+  public StockDTO getBookStock(@PathVariable Long bookId) {
+    bookService.getBookById(bookId);
     List<BookCopy> copies = bookCopyRepository.findByBook_IdBook(bookId);
-    StockDTO stockDTO = stockService.calculateStock(copies);
-    return stockDTO;
+    return stockService.calculateStock(copies);
+  }
+
+  // Stock d'une edition precise (format) du livre
+  @GetMapping("/{bookId}/stock/{format}")
+  public StockDTO getBookStockByFormat(
+      @PathVariable Long bookId, @PathVariable Format format) {
+    bookService.getBookById(bookId);
+    List<BookCopy> copies =
+        bookCopyRepository.findByBook_IdBook(bookId).stream()
+            .filter(copy -> copy.getFormat() == format)
+            .toList();
+    return stockService.calculateStock(copies);
   }
 }
