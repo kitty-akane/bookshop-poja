@@ -9,29 +9,22 @@ import school.hei.td.entity.dto.StockDTO;
 public class StockService {
   public StockDTO calculateStock(List<BookCopy> copies) {
     int available = 0;
-    int borrowed = 0;
-    int lost = 0;
     int reserved = 0;
+    int sold = 0;
 
     for (BookCopy copy : copies) {
-
       switch (copy.getStatus()) {
         case AVAILABLE -> available++;
-
-        case BORROWED -> borrowed++;
-
-        case LOST -> lost++;
-
         case RESERVED -> reserved++;
+        case SOLD -> sold++;
       }
     }
 
     return StockDTO.builder()
         .totalQuantity(copies.size())
         .availableQuantity(available)
-        .borrowerQuantity(borrowed)
-        .lostOrDamagedQuantity(lost)
         .reservedQuantity(reserved)
+        .soldQuantity(sold)
         .build();
   }
 }
