@@ -5,18 +5,18 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import school.hei.td.entity.dto.RevenueByGenreDTO;
-import school.hei.td.service.RevenueService;
+import school.hei.td.entity.dto.IncomeByGenreDTO;
+import school.hei.td.service.IncomeService;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/income")
 public class IncomeController {
 
-  private final RevenueService revenueService;
+  private final IncomeService IncomeService;
 
   @GetMapping("/by-genre")
-  public List<RevenueByGenreDTO> revenueByGenre() {
-    return revenueService.getRevenueByGenre();
+  public List<IncomeByGenreDTO> IncomeByGenre() {
+    return IncomeService.getIncomeByGenre();
   }
 }
