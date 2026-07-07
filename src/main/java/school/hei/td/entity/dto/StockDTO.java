@@ -12,7 +12,6 @@ import lombok.*;
 public class StockDTO {
   private int totalQuantity;
   private int availableQuantity;
-  private int borrowerQuantity;
-  private int lostOrDamagedQuantity;
   private int reservedQuantity;
+  private int soldQuantity;
 }
