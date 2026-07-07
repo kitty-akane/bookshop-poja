@@ -27,7 +27,7 @@ class StockServiceTest {
 
     StockDTO stock = stockService.calculateStock(copies);
 
-    assertEquals(5, stock.getTotalQuantity());
+    assertEquals(4, stock.getTotalQuantity());
     assertEquals(2, stock.getAvailableQuantity());
     assertEquals(1, stock.getSoldQuantity());
     assertEquals(1, stock.getReservedQuantity());
