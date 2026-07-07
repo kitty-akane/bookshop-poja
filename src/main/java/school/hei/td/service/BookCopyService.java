@@ -10,14 +10,12 @@ import school.hei.td.entity.dto.BookCopyDTO;
 import school.hei.td.exception.NotFoundException;
 import school.hei.td.mapper.BookCopyMapper;
 import school.hei.td.repository.BookCopyRepository;
-import school.hei.td.repository.BookRepository;
 
 @Service
 @AllArgsConstructor
 public class BookCopyService {
   private final BookCopyRepository repository;
   private final BookCopyMapper bookCopyMapper;
-  private final BookRepository bookRepository;
 
   public List<BookCopyDTO> getAllBookCopies() {
     return repository.findAll().stream().map(bookCopyMapper::toDTO).toList();
