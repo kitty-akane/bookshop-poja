@@ -9,9 +9,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class StockDTO {
-  private int totalQuantity;
+public class LowStockBookDTO {
+  private BookDTO bookDTO;
   private int availableQuantity;
-  private int reservedQuantity;
-  private int soldQuantity;
 }

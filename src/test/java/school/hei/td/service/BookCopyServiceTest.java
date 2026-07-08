@@ -1,4 +1,4 @@
-package school.hei.td.conf;
+package school.hei.td.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -14,13 +14,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import school.hei.td.entity.Book;
 import school.hei.td.entity.BookCopy;
-import school.hei.td.entity.Format;
-import school.hei.td.entity.Status;
 import school.hei.td.entity.dto.BookCopyDTO;
+import school.hei.td.enums.Format;
+import school.hei.td.enums.Status;
 import school.hei.td.mapper.BookCopyMapper;
 import school.hei.td.repository.BookCopyRepository;
-import school.hei.td.repository.BookRepository;
-import school.hei.td.service.BookCopyService;
 
 @ExtendWith(MockitoExtension.class)
 public class BookCopyServiceTest {
@@ -28,8 +26,6 @@ public class BookCopyServiceTest {
   @Mock private BookCopyRepository repository;
 
   @Mock private BookCopyMapper bookCopyMapper;
-
-  @Mock private BookRepository bookRepository;
 
   @InjectMocks private BookCopyService bookCopyService;
 
@@ -113,7 +109,7 @@ public class BookCopyServiceTest {
         BookCopy.builder()
             .idBookCopy(73829104L)
             .barcode("BC-002")
-            .status(Status.BORROWED)
+            .status(Status.RESERVED)
             .price(30.0)
             .format(Format.HARD_COVER)
             .acquiredDate(LocalDate.of(2022, 5, 10))
@@ -127,7 +123,7 @@ public class BookCopyServiceTest {
             BookCopyDTO.builder()
                 .idBookCopy(73829104L)
                 .barcode("BC-002")
-                .status(Status.BORROWED)
+                .status(Status.RESERVED)
                 .price(30.0)
                 .format(Format.HARD_COVER)
                 .acquiredDate(LocalDate.of(2022, 5, 10))
@@ -167,7 +163,7 @@ public class BookCopyServiceTest {
     var dto =
         BookCopyDTO.builder()
             .barcode("BC-UPDATED")
-            .status(Status.BORROWED)
+            .status(Status.RESERVED)
             .price(30.0)
             .format(Format.HARD_COVER)
             .acquiredDate(LocalDate.of(2023, 1, 15))
@@ -176,7 +172,7 @@ public class BookCopyServiceTest {
         BookCopyDTO.builder()
             .idBookCopy(EXISTING_ID)
             .barcode("BC-UPDATED")
-            .status(Status.BORROWED)
+            .status(Status.RESERVED)
             .price(30.0)
             .format(Format.HARD_COVER)
             .acquiredDate(LocalDate.of(2023, 1, 15))
@@ -189,7 +185,7 @@ public class BookCopyServiceTest {
     var result = bookCopyService.updateBookCopy(EXISTING_ID, dto);
 
     assertEquals("BC-UPDATED", result.getBarcode());
-    assertEquals(Status.BORROWED, result.getStatus());
+    assertEquals(Status.RESERVED, result.getStatus());
 
     when(repository.findById(NON_EXISTING_ID)).thenReturn(Optional.empty());
     var exception =

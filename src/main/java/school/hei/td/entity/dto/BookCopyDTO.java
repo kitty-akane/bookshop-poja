@@ -2,8 +2,8 @@ package school.hei.td.entity.dto;
 
 import java.time.LocalDate;
 import lombok.*;
-import school.hei.td.entity.Format;
-import school.hei.td.entity.Status;
+import school.hei.td.enums.Format;
+import school.hei.td.enums.Status;
 
 @NoArgsConstructor
 @AllArgsConstructor

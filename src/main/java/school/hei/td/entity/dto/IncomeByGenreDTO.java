@@ -9,9 +9,8 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class StockDTO {
-  private int totalQuantity;
-  private int availableQuantity;
-  private int reservedQuantity;
-  private int soldQuantity;
+public class IncomeByGenreDTO {
+  private String genre;
+  private Double totalIncome;
+  private Long salesCount;
 }

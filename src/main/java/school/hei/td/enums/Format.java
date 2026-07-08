@@ -1,4 +1,4 @@
-package school.hei.td.entity;
+package school.hei.td.enums;
 
 public enum Format {
   HARD_COVER,

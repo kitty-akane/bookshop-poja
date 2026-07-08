@@ -1,5 +1,6 @@
 package school.hei.td.entity.dto;
 
+import java.time.LocalDate;
 import lombok.*;
 
 @NoArgsConstructor
@@ -9,9 +10,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class StockDTO {
-  private int totalQuantity;
-  private int availableQuantity;
-  private int reservedQuantity;
-  private int soldQuantity;
+public class CreateSaleRequestDTO {
+  private Long bookCopyId;
+  private LocalDate saleDate;
 }

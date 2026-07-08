@@ -15,20 +15,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import school.hei.td.entity.dto.BookDTO;
 import school.hei.td.exception.GlobalExceptionHandler;
 import school.hei.td.exception.NotFoundException;
-import school.hei.td.repository.BookCopyRepository;
-import school.hei.td.service.BookCopyService;
 import school.hei.td.service.BookService;
-import school.hei.td.service.StockService;
 
 @WebMvcTest({BookController.class, GlobalExceptionHandler.class})
 class BookControllerTest {
   @Autowired private MockMvc mockMvc;
   private BookDTO lePetitPrince;
   @MockBean private BookService bookService;
-  @MockBean private BookCopyService bookCopyService;
-  @MockBean private BookCopyRepository bookCopyRepository;
-  @MockBean private StockService stockService;
-  private BookController bookController;
 
   @BeforeEach
   void setUpd() {
