@@ -433,6 +433,44 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
 
+  /sales:
+    get:
+      tags: [Sales]
+      summary: List all sales
+      operationId: getAllSales
+      responses:
+        "200":
+          description: List of sales
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SaleDTO"
+    post:
+      tags: [Sales]
+      summary: Create a sale (marks the book copy as SOLD)
+      operationId: createSale
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSaleRequestDTO"
+      responses:
+        "200":
+          description: Created sale
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SaleDTO"
+        "404":
+          description: Book copy not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExceptionBody"
+
 components:
   parameters:
     IdPathParam:
@@ -568,3 +606,37 @@ components:
         birthDate:
           type: string
           format: date
+
+    CreateSaleRequestDTO:
+      type: object
+      required: [bookCopyId, saleDate]
+      properties:
+        bookCopyId:
+          type: integer
+          format: int64
+        saleDate:
+          type: string
+          format: date
+
+    SaleDTO:
+      type: object
+      properties:
+        idSale:
+          type: integer
+          format: int64
+        bookCopyDTO:
+          $ref: "#/components/schemas/BookCopyDTO"
+        saleDate:
+          type: string
+          format: date
+        amount:
+          type: number
+          format: double
+
+    LowStockBookDTO:
+      type: object
+      properties:
+        bookDTO:
+          $ref: "#/components/schemas/BookDTO"
+        availableQuantity:
+          type: integer
