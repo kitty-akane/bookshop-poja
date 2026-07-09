@@ -489,6 +489,21 @@ components:
           schema:
             $ref: "#/components/schemas/ExceptionBody"
 
+  /income/byGenre:
+    get:
+      tags: [Income]
+      summary: Aggregated income and sales count grouped by book genre/category
+      operationId: getIncomeByGenre
+      responses:
+        "200":
+          description: Income by genre
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/IncomeByGenreDTO"
+
   schemas:
     Format:
       type: string
@@ -640,3 +655,15 @@ components:
           $ref: "#/components/schemas/BookDTO"
         availableQuantity:
           type: integer
+
+    IncomeByGenreDTO:
+      type: object
+      properties:
+        genre:
+          type: string
+        totalIncome:
+          type: number
+          format: double
+        salesCount:
+          type: integer
+          format: int64
