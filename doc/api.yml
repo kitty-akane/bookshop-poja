@@ -352,6 +352,87 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
 
+  /customers:
+    get:
+      tags: [Customers]
+      summary: List all customers
+      operationId: getAllCustomers
+      responses:
+        "200":
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CustomerDTO"
+    post:
+      tags: [Customers]
+      summary: Create a customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerDTO"
+      responses:
+        "200":
+          description: Created customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDTO"
+
+  /customers/{id}:
+    get:
+      tags: [Customers]
+      summary: Get a customer by id
+      operationId: getCustomerById
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Customer found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [Customers]
+      summary: Update a customer
+      operationId: updateCustomer
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerDTO"
+      responses:
+        "200":
+          description: Updated customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [Customers]
+      summary: Delete a customer
+      operationId: deleteCustomer
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
 components:
   parameters:
     IdPathParam:
@@ -466,3 +547,24 @@ components:
           type: integer
         soldQuantity:
           type: integer
+
+    CustomerDTO:
+      type: object
+      properties:
+        idCustomer:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        address:
+          type: string
+        birthDate:
+          type: string
+          format: date
