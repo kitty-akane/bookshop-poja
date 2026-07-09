@@ -1,0 +1,162 @@
+openapi: 3.0.3
+info:
+  title: Bookshop API
+  description: API for managing everything about a library - authors, books, book copies, customers, sales and stock.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local server
+tags:
+  - name: Author
+    description: Everything about authors
+  - name: Book
+    description: Everything about books
+  - name: BookCopy
+    description: Everything about book copies
+  - name: Customer
+    description: Everything about customers
+  - name: Sale
+    description: Everything about sales
+  - name: Stock
+    description: Everything about stock
+paths:
+  /authors:
+    get:
+      tags: [Authors]
+      summary: List all authors
+      operationId: getAllAuthors
+      responses:
+        "200":
+          description: List of authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AuthorDTO"
+    post:
+      tags: [Authors]
+      summary: Create an author
+      operationId: createAuthor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorDTO"
+      responses:
+        "200":
+          description: Created author
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorDTO"
+
+  /authors/{id}:
+    get:
+      tags: [Authors]
+      summary: Get an author by id
+      operationId: getAuthorById
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Author found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [Authors]
+      summary: Update an author
+      operationId: updateAuthor
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorDTO"
+      responses:
+        "200":
+          description: Updated author
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [Authors]
+      summary: Delete an author
+      operationId: deleteAuthor
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+
+components:
+  parameters:
+    IdPathParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ExceptionBody"
+
+  schemas:
+    Format:
+      type: string
+      enum: [HARD_COVER, SOFT_COVER, POCKET]
+
+    Status:
+      type: string
+      enum: [AVAILABLE, RESERVED, SOLD]
+
+    ExceptionBody:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    AuthorDTO:
+      type: object
+      properties:
+        idAuthor:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        nationality:
+          type: string
+        birthDate:
+          type: string
+          format: date
