@@ -1,0 +1,669 @@
+openapi: 3.0.3
+info:
+  title: Bookshop API
+  description: API for managing everything about a library - authors, books, book copies, customers, sales and stock.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local server
+tags:
+  - name: Author
+    description: Everything about authors
+  - name: Book
+    description: Everything about books
+  - name: BookCopy
+    description: Everything about book copies
+  - name: Customer
+    description: Everything about customers
+  - name: Sale
+    description: Everything about sales
+  - name: Stock
+    description: Everything about stock
+paths:
+  /authors:
+    get:
+      tags: [Authors]
+      summary: List all authors
+      operationId: getAllAuthors
+      responses:
+        "200":
+          description: List of authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AuthorDTO"
+    post:
+      tags: [Authors]
+      summary: Create an author
+      operationId: createAuthor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorDTO"
+      responses:
+        "200":
+          description: Created author
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorDTO"
+
+  /authors/{id}:
+    get:
+      tags: [Authors]
+      summary: Get an author by id
+      operationId: getAuthorById
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Author found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [Authors]
+      summary: Update an author
+      operationId: updateAuthor
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorDTO"
+      responses:
+        "200":
+          description: Updated author
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [Authors]
+      summary: Delete an author
+      operationId: deleteAuthor
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /books:
+    get:
+      tags: [Books]
+      summary: List all books
+      operationId: getAllBooks
+      responses:
+        "200":
+          description: List of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BookDTO"
+    post:
+      tags: [Books]
+      summary: Create a book
+      operationId: createBook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookDTO"
+      responses:
+        "200":
+          description: Created book
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookDTO"
+
+  /books/{id}:
+    get:
+      tags: [Books]
+      summary: Get a book by id
+      operationId: getBookById
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Book found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [Books]
+      summary: Update a book (partial - only non-null fields are applied)
+      operationId: updateBook
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookDTO"
+      responses:
+        "200":
+          description: Updated book
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [Books]
+      summary: Delete a book
+      operationId: deleteBook
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /books/search/{value}:
+    get:
+      tags: [Books]
+      summary: Search books by (partial) title
+      operationId: searchBooks
+      parameters:
+        - name: value
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Matching books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BookDTO"
+
+  /books/low-stock:
+    get:
+      tags: [Stock]
+      summary: List books whose available stock is at or below a threshold
+      operationId: getLowStockBooks
+      parameters:
+        - name: threshold
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 3
+      responses:
+        "200":
+          description: Low stock books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LowStockBookDTO"
+
+  /books/{bookId}/stock:
+    get:
+      tags: [Stock]
+      summary: Get aggregated stock for a book (all formats)
+      operationId: getBookStock
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Stock summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StockDTO"
+
+  /books/{bookId}/stock/{format}:
+    get:
+      tags: [Stock]
+      summary: Get stock for a book filtered by format
+      operationId: getBookStockByFormat
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: format
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/Format"
+      responses:
+        "200":
+          description: Stock summary for the given format
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StockDTO"
+
+  /bookcopies:
+    get:
+      tags: [BookCopies]
+      summary: List all book copies
+      operationId: getAllBookCopies
+      responses:
+        "200":
+          description: List of book copies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BookCopyDTO"
+    post:
+      tags: [BookCopies]
+      summary: Create a book copy
+      operationId: createBookCopy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookCopyDTO"
+      responses:
+        "200":
+          description: Created book copy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookCopyDTO"
+
+  /bookcopies/{id}:
+    get:
+      tags: [BookCopies]
+      summary: Get a book copy by id
+      operationId: getBookCopyById
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Book copy found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookCopyDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [BookCopies]
+      summary: Update a book copy
+      operationId: updateBookCopy
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookCopyDTO"
+      responses:
+        "200":
+          description: Updated book copy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookCopyDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [BookCopies]
+      summary: Delete a book copy
+      operationId: deleteBookCopy
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /customers:
+    get:
+      tags: [Customers]
+      summary: List all customers
+      operationId: getAllCustomers
+      responses:
+        "200":
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CustomerDTO"
+    post:
+      tags: [Customers]
+      summary: Create a customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerDTO"
+      responses:
+        "200":
+          description: Created customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDTO"
+
+  /customers/{id}:
+    get:
+      tags: [Customers]
+      summary: Get a customer by id
+      operationId: getCustomerById
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Customer found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [Customers]
+      summary: Update a customer
+      operationId: updateCustomer
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerDTO"
+      responses:
+        "200":
+          description: Updated customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerDTO"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [Customers]
+      summary: Delete a customer
+      operationId: deleteCustomer
+      parameters:
+        - $ref: "#/components/parameters/IdPathParam"
+      responses:
+        "200":
+          description: Deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /sales:
+    get:
+      tags: [Sales]
+      summary: List all sales
+      operationId: getAllSales
+      responses:
+        "200":
+          description: List of sales
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SaleDTO"
+    post:
+      tags: [Sales]
+      summary: Create a sale (marks the book copy as SOLD)
+      operationId: createSale
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSaleRequestDTO"
+      responses:
+        "200":
+          description: Created sale
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SaleDTO"
+        "404":
+          description: Book copy not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExceptionBody"
+
+components:
+  parameters:
+    IdPathParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ExceptionBody"
+
+  /income/byGenre:
+    get:
+      tags: [Income]
+      summary: Aggregated income and sales count grouped by book genre/category
+      operationId: getIncomeByGenre
+      responses:
+        "200":
+          description: Income by genre
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/IncomeByGenreDTO"
+
+  schemas:
+    Format:
+      type: string
+      enum: [HARD_COVER, SOFT_COVER, POCKET]
+
+    Status:
+      type: string
+      enum: [AVAILABLE, RESERVED, SOLD]
+
+    ExceptionBody:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    AuthorDTO:
+      type: object
+      properties:
+        idAuthor:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        nationality:
+          type: string
+        birthDate:
+          type: string
+          format: date
+
+    BookDTO:
+      type: object
+      properties:
+        idBook:
+          type: integer
+          format: int64
+        title:
+          type: string
+        isbn:
+          type: string
+        publicationDate:
+          type: string
+          format: date
+        author:
+          type: string
+        publisher:
+          type: string
+        language:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+
+    BookCopyDTO:
+      type: object
+      properties:
+        idBookCopy:
+          type: integer
+          format: int64
+        barcode:
+          type: string
+        status:
+          $ref: "#/components/schemas/Status"
+        price:
+          type: number
+          format: double
+        format:
+          $ref: "#/components/schemas/Format"
+        acquiredDate:
+          type: string
+          format: date
+        bookDTO:
+          $ref: "#/components/schemas/BookDTO"
+
+    StockDTO:
+      type: object
+      properties:
+        totalQuantity:
+          type: integer
+        availableQuantity:
+          type: integer
+        reservedQuantity:
+          type: integer
+        soldQuantity:
+          type: integer
+
+    CustomerDTO:
+      type: object
+      properties:
+        idCustomer:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        address:
+          type: string
+        birthDate:
+          type: string
+          format: date
+
+    CreateSaleRequestDTO:
+      type: object
+      required: [bookCopyId, saleDate]
+      properties:
+        bookCopyId:
+          type: integer
+          format: int64
+        saleDate:
+          type: string
+          format: date
+
+    SaleDTO:
+      type: object
+      properties:
+        idSale:
+          type: integer
+          format: int64
+        bookCopyDTO:
+          $ref: "#/components/schemas/BookCopyDTO"
+        saleDate:
+          type: string
+          format: date
+        amount:
+          type: number
+          format: double
+
+    LowStockBookDTO:
+      type: object
+      properties:
+        bookDTO:
+          $ref: "#/components/schemas/BookDTO"
+        availableQuantity:
+          type: integer
+
+    IncomeByGenreDTO:
+      type: object
+      properties:
+        genre:
+          type: string
+        totalIncome:
+          type: number
+          format: double
+        salesCount:
+          type: integer
+          format: int64

@@ -103,7 +103,6 @@ public class BookCopyServiceTest {
 
   @Test
   void testGetAllBookCopies() {
-    // GIVEN
     var copy1 = sampleBookCopy();
     var copy2 =
         BookCopy.builder()
