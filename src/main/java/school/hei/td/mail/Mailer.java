@@ -1,6 +1,8 @@
 package school.hei.td.mail;
 
-import static jakarta.mail.Message.RecipientType.*;
+import static jakarta.mail.Message.RecipientType.BCC;
+import static jakarta.mail.Message.RecipientType.CC;
+import static jakarta.mail.Message.RecipientType.TO;
 
 import jakarta.activation.DataHandler;
 import jakarta.activation.DataSource;

@@ -1,3 +1,4 @@
+CREATE SEQUENCE bookcopy_seq START 1 INCREMENT 50;
 
 CREATE TABLE bookcopy
 (
